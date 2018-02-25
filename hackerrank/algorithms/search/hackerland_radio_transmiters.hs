@@ -1,6 +1,6 @@
-;;
-;; https://www.hackerrank.com/challenges/hackerland-radio-transmitters/problem
-;;
+--
+-- https://www.hackerrank.com/challenges/hackerland-radio-transmitters/problem
+--
 import Control.Applicative
 import Control.Monad
 import System.IO
