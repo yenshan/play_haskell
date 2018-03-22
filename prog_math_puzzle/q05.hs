@@ -9,4 +9,6 @@ change_coin money max_coins =
              m10 + m50 + m100 + m500 <= max_coins,
              money == (10*m10 + 50*m50 + 100*m100 + 500*m500)]
 
+main :: IO ()
+main = do print $ change_coin 1000 15 
  
