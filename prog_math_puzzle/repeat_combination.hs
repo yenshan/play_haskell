@@ -1,4 +1,8 @@
 
+--
+-- 深さ優先結合
+-- 結合結果を引数に渡して、繰り返し結合するやり方
+--
 
 combination :: [Int] -> [Int] -> Int -> [[Int]]
 combination xs ys 0 = [ys]
