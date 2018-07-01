@@ -1,3 +1,6 @@
+--
+-- https://www.hackerrank.com/challenges/halloween-party/problem
+--
 
 do_loop 0 = return ()
 do_loop t = do
