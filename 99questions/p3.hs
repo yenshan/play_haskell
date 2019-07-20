@@ -1,7 +1,9 @@
 
 
-elementAtN n (x:xs) k
+_elementAt :: Int -> [a] -> Int -> a
+_elementAt n (x:xs) k
     | n == k = x
-    | otherwise = elementAtN (n+1) xs k
+    | otherwise = _elementAt (n+1) xs k
 
-elementAt xs k = elementAtN 1 xs k
+elementAt :: [a] -> Int -> a
+elementAt xs k = _elementAt 1 xs k
