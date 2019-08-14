@@ -8,3 +8,20 @@ _encode (x:xs) p cnt res
 
 encode :: Eq a => [a] -> [(Int,a)] 
 encode (x:xs) = _encode xs x 1 []
+
+
+_pack :: Eq a => [a] -> a -> [a] -> [[a]] -> [[a]]
+_pack [] _ pac res = (res++[pac])
+_pack (x:xs) p pac res
+    | x == p = _pack xs p (pac++[x]) res
+    | otherwise = _pack xs x [x] (res++[pac])
+
+pack :: Eq a => [a] -> [[a]]
+pack (x:xs) = _pack xs x [x] []
+
+enc :: [a] -> Int -> (Int,a)
+enc [x] cnt = (cnt,x)
+enc (x:xs) cnt = enc xs (cnt+1)
+
+encode' :: Eq a => [a] -> [(Int,a)] 
+encode' xs = [enc x 1 | x <- pack xs]
