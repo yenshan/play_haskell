@@ -14,7 +14,7 @@ pack (x:xs) = _pack xs x [x] []
 enc :: [a] -> Int -> Elem a
 enc [x] 1 = Single x
 enc [x] cnt = Multiple cnt x
-enc (x:xs) cnt = enc xs (cnt+1)
+enc (_:xs) cnt = enc xs (cnt+1)
 
 encodeModified :: Eq a => [a] -> [Elem a] 
 encodeModified xs = [enc x 1 | x <- pack xs]

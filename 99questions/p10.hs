@@ -10,6 +10,8 @@ encode :: Eq a => [a] -> [(Int,a)]
 encode (x:xs) = _encode xs x 1 []
 
 
+-------------------------
+
 _pack :: Eq a => [a] -> a -> [a] -> [[a]] -> [[a]]
 _pack [] _ pac res = (res++[pac])
 _pack (x:xs) p pac res
