@@ -1,6 +1,11 @@
 import Data.List
 
 
+
+--
+-- (b)
+--
+
 subs :: [a] -> [[a]]
 subs [] = [[]]
 subs (x:xs) = subs xs ++ [ x : a | a <- subs xs]
