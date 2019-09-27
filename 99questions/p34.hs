@@ -15,3 +15,6 @@ coprime x y = myGCD x y == 1
 totient :: Int -> Int
 totient 1 = 1
 totient m = length [a | a <- [1..(m-1)], coprime a m]
+
+main = do
+        print $ totient 10090

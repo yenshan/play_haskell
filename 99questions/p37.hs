@@ -26,4 +26,11 @@ prime_factors_mult :: Num t => Int -> [(Int, t)]
 prime_factors_mult n = count_num 0 $ sort $ primeFactor n
 
 
+phi m = foldl fn 1 (prime_factors_mult m)
+        where
+            fn res (p,m) = let p1 = fromIntegral p
+                               m1 = fromIntegral m
+                           in res * (p1 - 1) * p1 ** (m1 - 1)
 
+main = do
+        print $ phi 10090
