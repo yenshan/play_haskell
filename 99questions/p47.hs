@@ -33,5 +33,5 @@ table f = do
             return ()
 
 main = do
-        table (\a b -> (and' a (or' a b)))
+        table (\a b -> (a `and'` (a `or'` not b)))
         return ()
