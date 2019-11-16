@@ -1,5 +1,7 @@
 
-infixl 3 `equ'`
+infixl 5 `and'`
+infixl 4 `or'`
+infixl 7 `equ'`
 
 (and') True True = True
 (and') False _ = False
