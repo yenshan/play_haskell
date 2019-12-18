@@ -32,6 +32,21 @@ eqTree (Branch a la ra) (Branch b lb rb) = a == b && eqTree la lb && eqTree ra r
 cbalTree 1 = addNode 'x' Empty
 cbalTree n = nubBy eqTree $ concat [addNode 'x' y | y <- cbalTree (n-1)]
 
+mirror :: Eq a => Tree a -> Tree a -> Bool
+mirror Empty Empty = True
+mirror _ Empty = False
+mirror Empty _ = False
+mirror (Branch a la ra) (Branch b lb rb) = (a == b) && mirror la lb && mirror ra rb
+
+symmetric :: Eq a => Tree a -> Bool
+symmetric (Branch _ r l) = mirror r l
+
+-------------------------------------------------
+  p58
+-------------------------------------------------
+
+symCbalTree n = filter symmetric $ cbalTree n
+
 main = do
-         print $ cbalTree 4
+         print $ symCbalTree 5
          return ()
