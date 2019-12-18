@@ -1,3 +1,4 @@
+
 data Tree a = Empty | Branch a (Tree a) (Tree a) deriving (Show,Eq)
 
 leaf :: a -> Tree a
@@ -21,10 +22,24 @@ addNode x (Branch a left right)
         | childs left < childs right = [Branch a l right | l <- addNode x left]
         | otherwise = [Branch a l right | l <- addNode x left] ++ [Branch a left r | r <- addNode x right]
 
-cbalTree 1 = addNode 'x' Empty
-cbalTree 3 = addNode 'x' $ head $ cbalTree 2
-cbalTree n = concat [addNode 'x' y | y <- cbalTree (n-1)]
+mirror :: Eq a => Tree a -> Tree a -> Bool
+mirror Empty Empty = True
+mirror _ Empty = False
+mirror Empty _ = False
+mirror (Branch a la ra) (Branch b lb rb) = mirror la lb && mirror ra rb
+
+symmetric :: Eq a => Tree a -> Bool
+symmetric (Branch _ r l) = mirror r l
+
+-----------------------------------
+-----------------------------------
+construct_ [x] = addNode x Empty
+construct_ [x,y,z] = addNode x $ head $ construct_ [y,z]
+construct_ (x:xs) = concat [addNode x y | y <- construct_ xs]
+
+construct = head . construct_ . reverse
 
 main = do
-         print $ cbalTree 4
+         print $ symmetric $ construct [5,3,18,1,4,12,21]
+         print $ symmetric $ construct [3,2,5,7,1]
          return ()
