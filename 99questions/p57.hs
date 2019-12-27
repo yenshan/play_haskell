@@ -40,6 +40,7 @@ construct_ (x:xs) = concat [addNode x y | y <- construct_ xs]
 construct = head . construct_ . reverse
 
 main = do
+         print $ construct [3,2,5,7,1]
          print $ symmetric $ construct [5,3,18,1,4,12,21]
          print $ symmetric $ construct [3,2,5,7,1]
          return ()

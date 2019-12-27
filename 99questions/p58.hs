@@ -42,7 +42,7 @@ symmetric :: Eq a => Tree a -> Bool
 symmetric (Branch _ r l) = mirror r l
 
 -------------------------------------------------
-  p58
+--  p58
 -------------------------------------------------
 
 symCbalTree n = filter symmetric $ cbalTree n
