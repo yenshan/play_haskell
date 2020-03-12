@@ -20,6 +20,9 @@ display_lisp :: Tree Char -> String
 display_lisp (Node a []) = [a]
 display_lisp (Node a xs) = ['(',a] ++ concat [" " ++ display_lisp x | x <- xs] ++ [')']
 
+
+
+---------------
 anyChar :: [Char] -> (Char, [Char])
 anyChar [] = (' ',"")
 anyChar [x] = (x,"")

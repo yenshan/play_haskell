@@ -12,7 +12,6 @@ tree5 = Node 'a' [
                  ]
 
 
-nnodes (Node _ []) = 1
 nnodes (Node _ xs) = 1 + sum [nnodes x | x <- xs]
 
 main = do
