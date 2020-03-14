@@ -10,7 +10,7 @@ subs (x:xs) = yss ++ map (x:) yss
         where
             yss = subs xs
 
-combs xs = [a | a <- patterns, (length $ nodes a) == len]
+spanningTree xs = [a | a <- patterns, (length $ nodes a) == len]
     where
         len = length $ nodes xs
         patterns = [a | a <- subs xs, length a == (len-1)]
@@ -23,4 +23,4 @@ test_dat2 = [('a','b'),('a','c'),('a','d'),('b','d'),('c','d')]
 
 
 main = do 
-        print $ length $ combs test_dat
+        print $ length $ spanningTree test_dat
