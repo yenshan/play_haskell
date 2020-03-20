@@ -22,5 +22,9 @@ test_dat = [('a','b'),('a','d'),('b','c'),('b','e'),('c','e'),('d','e'),('d','f'
 test_dat2 = [('a','b'),('a','c'),('a','d'),('b','d'),('c','d')]
 
 
+test_dat3 = [(1,2),(1,3),(1,4),(2,4),(2,3),(3,4)]
+
+
 main = do 
         print $ length $ spanningTree test_dat
+        print $ length $ spanningTree test_dat3
