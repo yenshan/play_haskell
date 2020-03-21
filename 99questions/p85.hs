@@ -1,6 +1,20 @@
 import Data.List
 
-data GraphTerm a = Graph [a] [(a,a)] deriving (Show)
+data GraphTerm a = Graph [a] [(a,a)] deriving (Show,Eq)
+data AdjTerm a = Adj [(a,[a])] deriving (Show)
+
+adj x xs = head [b | (a,b) <- xs, a==x]
+
+instance Eq a => Eq (AdjTerm a) where
+    (Adj xs) == (Adj ys) = ne == []
+        where
+           ne = [a | (a,b) <- xs, b /= adj a ys]
+
+
+graphToAdj :: Ord a => GraphTerm a -> AdjTerm a
+graphToAdj (Graph xs ys) = Adj [(x, adjs x) | x <- xs]
+        where
+            adjs x = sort $ [b | (a, b) <- ys, a == x] ++ [a | (a, b) <- ys, b == x]
 
 
 
@@ -13,6 +27,7 @@ bijPatn (x:xs) ys = concat [map (\l -> (x,y) : l) (bijPatn xs (delete y ys)) | y
 findbi :: Eq a => a -> [(a,b)] -> b    
 findbi x ys = head [b | (a,b) <- ys, x==a]
 
+-- Graphを写像先に変換する
 trans :: Eq a => GraphTerm a -> [(a,b)] -> GraphTerm b
 trans (Graph ns es) bij = Graph nns nes
     where
@@ -20,13 +35,11 @@ trans (Graph ns es) bij = Graph nns nes
         nes = [(findbi a bij, findbi b bij) | (a,b) <- es]
 
 
-iso (Graph nxs exs) (Graph nys eys) = bijPatn nxs nys
-
-{--
-iso (Graph nxs exs) (Graph nys eys) = [ trans exs bij | bij <- cmbs]
+iso :: Ord a => GraphTerm a -> GraphTerm a -> Bool
+iso gx@(Graph nxs exs) gy@(Graph nys eys) = sames /= []
         where
-          cmbs = bijPatn nxs nys  
-          --}
+            allbij = bijPatn nxs nys
+            sames = [tgx | bij <- allbij, let tgx = trans gx bij, graphToAdj tgx == graphToAdj gy]
 
 
 
@@ -35,3 +48,8 @@ graphH1 = Graph [1,2,3,4,5,6,7,8] [(1,2),(1,4),(1,5),(6,2),(6,5),(6,7),(8,4),(8,
 
 g1 = Graph [1,2,3] [(1,2),(1,3)]
 g2 = Graph [4,5,6] [(4,5),(4,6)]
+
+
+main = do
+        print $ iso graphG1 graphH1
+
