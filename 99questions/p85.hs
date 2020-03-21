@@ -34,13 +34,14 @@ trans (Graph ns es) bij = Graph nns nes
         nns = [findbi a bij | a <- ns]
         nes = [(findbi a bij, findbi b bij) | (a,b) <- es]
 
-
+-- iso
+-- すべての写像のパターンを求めて、
+-- 写像に変換したあと、同じGraphになるかどうかをチェックする
 iso :: Ord a => GraphTerm a -> GraphTerm a -> Bool
 iso gx@(Graph nxs exs) gy@(Graph nys eys) = sames /= []
         where
             allbij = bijPatn nxs nys
             sames = [tgx | bij <- allbij, let tgx = trans gx bij, graphToAdj tgx == graphToAdj gy]
-
 
 
 graphG1 = Graph [1,2,3,4,5,6,7,8] [(1,5),(1,6),(1,7),(2,5),(2,6),(2,8),(3,5),(3,7),(3,8),(4,6),(4,7),(4,8)]
