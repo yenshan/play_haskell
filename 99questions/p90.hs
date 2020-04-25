@@ -21,9 +21,7 @@ queen_ c n qs
     where
         qp = [ qs ++ [(c,r)] | r <- [1..n], not $ elemAttack (c,r) qs]
 
-queen n = map getQpos $ queen_ 1 n []
-    where
-        getQpos = map snd
+queen n = map (map snd) $ queen_ 1 n []
 
 
 main = do

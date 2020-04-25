@@ -11,27 +11,30 @@ graphToAdj (Graph xs ys) = Adj [(x, adjs x) | x <- xs]
             adjs x = sort $ [b | (a, b) <- ys, a == x] ++ [a | (a, b) <- ys, b == x]
 
 
-getdat n [] = 0
-getdat n (x:xs) = let (y,b) = x in if y==n then b else getdat n xs
+-- find value of key 'n' in list of (key,value), return 0 when not found.
+findDat :: (Num b, Eq a) => a -> [(a,b)] -> b
+findDat n [] = 0
+findDat n ((x,v):xs) | x==n = v 
+                     | otherwise = findDat n xs
 
-getadj n [] = []
-getadj n (x:xs) = let (y,b) = x in if y==n then b else getadj n xs
+findAdj :: Eq a => a -> [(a,[a])] -> [a]
+findAdj n [] = []
+findAdj n ((x,v):xs) | x==n = v
+                     | otherwise = findAdj n xs
 
-
-getsides g@(Adj xs) n sl = [(n,s)] ++ adjl ++ sl
+setNoToAdjs :: (Eq a, Eq b, Num b) => [(a,b)] -> a -> AdjTerm a -> [(a,b)]
+setNoToAdjs node_no_list me (Adj xs) = [(me, myNo)] ++ adjl ++ node_no_list
         where
             oppsit 0 = 1
             oppsit 1 = 0
-            s = getdat n sl
-            adjl = [(a, oppsit s) | a <- getadj n xs]       
+            myNo = findDat me node_no_list
+            adjl = [(a, oppsit myNo) | a <- findAdj me xs]       
         
 
 bipartitle g@(Graph xs _) = length sl == length xs
     where
-        adj = graphToAdj g
-        bipartitle_ [] sl = sl
-        bipartitle_ (n:ns) sl = bipartitle_ ns $ getsides adj n sl
-        sl = nub $ bipartitle_ xs []
+        setNoToNode r x = setNoToAdjs r x (graphToAdj g)
+        sl = nub $ foldl setNoToNode [] xs
 
 
 testG = Graph [1,2,3,4,5] [(1,2),(2,3),(1,4),(3,4),(5,2),(5,4)]
